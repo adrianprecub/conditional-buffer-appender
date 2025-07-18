@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+    <!-- Standard console appender for non-request logs -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- Conditional Buffer Appender for request-scoped logging -->
+    <appender name="CONDITIONAL_BUFFER" class="com.mork.cookie.logback.ConditionalBufferAppender">
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+        <!-- Configuration options -->
+        <maxBufferSize>1000</maxBufferSize>
+        <bufferTimeoutMinutes>10</bufferTimeoutMinutes>
+        <cleanupIntervalMinutes>5</cleanupIntervalMinutes>
+    </appender>
+
+    <!-- Configure root logger -->
+    <root level="DEBUG">
+        <appender-ref ref="CONDITIONAL_BUFFER"/>
+    </root>
+</configuration>
