@@ -4,7 +4,17 @@ A smart Logback appender that dynamically displays logs based on request complet
 
 ## Quick Start
 
-### 1. Add Dependency
+### 1. Install to Local Maven Repository
+
+Since this library is not yet published to Maven Central, install it locally first:
+
+```bash
+# clone github repo
+cd conditional-buffer-appender
+mvn clean install
+```
+
+### 2. Add Dependency
 
 Add to your `pom.xml`:
 
@@ -16,7 +26,7 @@ Add to your `pom.xml`:
 </dependency>
 ```
 
-### 2. Configure Logback
+### 3. Configure Logback
 
 Add to your `logback-spring.xml`:
 
@@ -38,7 +48,7 @@ Add to your `logback-spring.xml`:
 </configuration>
 ```
 
-### 3. Enable Spring Boot Auto-Configuration
+### 4. Enable Spring Boot Auto-Configuration
 
 Add to your main application class or configuration:
 
@@ -52,7 +62,7 @@ public class YourApplication {
 }
 ```
 
-### 4. Use in Your Code
+### 5. Use in Your Code
 
 ```java
 @RestController
