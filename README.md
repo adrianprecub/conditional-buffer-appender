@@ -48,7 +48,7 @@ Add to your `logback-spring.xml`:
 </configuration>
 ```
 
-### 4. Enable Spring Boot Auto-Configuration
+### 4a. Enable Spring Boot Auto-Configuration
 
 Add to your main application class or configuration:
 
@@ -62,7 +62,11 @@ public class YourApplication {
 }
 ```
 
-### 5. Use in Your Code
+### 4b. Enable Micronaut Auto-Configuration
+
+For Micronaut applications, the configuration is automatically discovered. Just ensure the library is on the classpath and the configuration will be loaded automatically.
+
+### 5a. Use in Spring Boot Code
 
 ```java
 @RestController
@@ -70,6 +74,31 @@ public class YourController {
     private static final ConditionalLogger logger = new ConditionalLogger(YourController.class);
 
     @GetMapping("/api/example")
+    public String example() {
+        logger.debug("Starting request processing");
+        logger.info("Processing API request");
+        
+        try {
+            // Your business logic
+            processBusinessLogic();
+            logger.info("Request completed successfully");
+            return "Success";
+        } catch (Exception e) {
+            logger.error("Error occurred: {}", e.getMessage(), e);
+            return "Error";
+        }
+    }
+}
+```
+
+### 5b. Use in Micronaut Code
+
+```java
+@Controller
+public class YourController {
+    private static final ConditionalLogger logger = new ConditionalLogger(YourController.class);
+
+    @Get("/api/example")
     public String example() {
         logger.debug("Starting request processing");
         logger.info("Processing API request");
@@ -100,9 +129,11 @@ public class YourController {
 
 - **`ConditionalBufferAppender`**: Main Logback appender that buffers and conditionally displays logs
 - **`ConditionalLogger`**: Drop-in replacement for SLF4J Logger with same API
-- **`RequestLoggingFilter`**: Servlet filter that manages request lifecycle
+- **`RequestLoggingFilter`**: Servlet filter that manages request lifecycle (Spring Boot)
+- **`micronaut.RequestLoggingFilter`**: HTTP filter that manages request lifecycle (Micronaut)
 - **`RequestLoggingContext`**: Thread-local context for request ID and error state
-- **`ConditionalLoggingConfiguration`**: Spring Boot auto-configuration
+- **`spring.ConditionalLoggingConfiguration`**: Spring Boot auto-configuration
+- **`micronaut.ConditionalLoggingConfiguration`**: Micronaut auto-configuration
 
 ## Configuration Options
 
